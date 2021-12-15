@@ -1,7 +1,7 @@
 package club.zhuangbinan.linkedlist;
 
 /**
- * 单项链表demo
+ * 单向链表demo
  */
 public class SingleLinkedListDemo {
 
@@ -15,6 +15,12 @@ public class SingleLinkedListDemo {
         linkedList.add(heroNode3);
 
         linkedList.list();
+        HeroNode lastHeroNode = linkedList.getLastHeroNode();
+        System.out.println(lastHeroNode);
+
+        HeroNode firstHeroNode = linkedList.getFirstHeroNode();
+        System.out.println(firstHeroNode);
+
     }
 }
 
@@ -27,6 +33,10 @@ class SingleLinkedList {
         }else {
             getLastHeroNode().setNext(heroNode);
         }
+    }
+
+    public HeroNode getFirstHeroNode(){
+        return heroNode.getNext();
     }
 
     public HeroNode getLastHeroNode() {
