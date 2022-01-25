@@ -2,6 +2,7 @@ package club.zhuangbinan.queue;
 
 /**
  * 数组模拟环形队列demo
+ * 是 ArrayQueueTest 的改进版
  */
 public class CircleArray {
 
