@@ -1,6 +1,5 @@
 package club.zhuangbinan.linkedlist;
 
-import java.util.LinkedList;
 import java.util.NoSuchElementException;
 
 /**
@@ -13,16 +12,49 @@ public class SingleLinkedListDemo {
         HeroNode heroNode1= new HeroNode(1,"宋江","及时雨");
         HeroNode heroNode2= new HeroNode(2,"卢俊义","玉麒麟");
         HeroNode heroNode3= new HeroNode(3,"林冲","豹子头");
-        linkedList.addWithoutOrder(heroNode2);
-        linkedList.addWithoutOrder(heroNode1);
-        linkedList.addWithoutOrder(heroNode3);
+//        linkedList.addWithoutOrder(heroNode1);
+//        linkedList.addWithoutOrder(heroNode2);
+//        linkedList.addWithoutOrder(heroNode3);
 
         linkedList.list();
-        HeroNode lastHeroNode = linkedList.getLastHeroNode();
-        System.out.println(lastHeroNode);
+//        HeroNode lastHeroNode = linkedList.getLastHeroNode();
+//        System.out.println(lastHeroNode);
 
-        HeroNode firstHeroNode = linkedList.getFirstHeroNode();
-        System.out.println(firstHeroNode);
+//        HeroNode firstHeroNode = linkedList.getFirstHeroNode();
+//        System.out.println(firstHeroNode);
+
+        ////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////////////////////////
+
+        SingleLinkedList linkedListWithOrder = new SingleLinkedList();
+        HeroNode heroNode4= new HeroNode(4,"宋江","及时雨");
+        HeroNode heroNode5= new HeroNode(5,"卢俊义","玉麒麟");
+        HeroNode heroNode6= new HeroNode(6,"林冲","豹子头");
+        HeroNode heroNode7= new HeroNode(7,"鲁智深","花和尚");
+
+
+        linkedListWithOrder.addByOrder_WriteByMySelf(heroNode6);
+        linkedListWithOrder.addByOrder_WriteByMySelf(heroNode7);
+        linkedListWithOrder.addByOrder_WriteByMySelf(heroNode4);
+        linkedListWithOrder.addByOrder_WriteByMySelf(heroNode6);
+        linkedListWithOrder.addByOrder_WriteByMySelf(heroNode5);
+        linkedListWithOrder.list();
+
+        ////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////////////////////////
+        SingleLinkedList linkedListWithOrderByTeacher = new SingleLinkedList();
+        HeroNode heroNode11= new HeroNode(11,"宋江","及时雨");
+        HeroNode heroNode12= new HeroNode(12,"卢俊义","玉麒麟");
+        HeroNode heroNode13= new HeroNode(13,"林冲","豹子头");
+        HeroNode heroNode14= new HeroNode(14,"鲁智深","花和尚");
+
+
+        linkedListWithOrderByTeacher.addByOrder_WriteByTeacher(heroNode12);
+        linkedListWithOrderByTeacher.addByOrder_WriteByTeacher(heroNode11);
+        linkedListWithOrderByTeacher.addByOrder_WriteByTeacher(heroNode13);
+        linkedListWithOrderByTeacher.addByOrder_WriteByTeacher(heroNode14);
+        linkedListWithOrderByTeacher.addByOrder_WriteByTeacher(heroNode11);
+        linkedListWithOrderByTeacher.list();
 
     }
 }
@@ -51,18 +83,93 @@ class SingleLinkedList {
     }
 
     /**
-     * 添加
+     * 添加 方法 韩顺平老师写的 比我自己写的巧妙得多
      * 按 no 顺序添加,从小到大 1 2 3 4 5
      * @param heroNode 要添加的 HeroNode
      */
-    public void addByOrder(HeroNode heroNode) {
+    public void addByOrder_WriteByTeacher(HeroNode heroNode) {
+        HeroNode temp = head;
+        boolean flag = false;//标识要添加的新元素的编号是否已经存在,默认为false,存在时置为true
+        while (true) {
+            if (temp.getNext() == null) {//说明temp已经在链表的最后
+                break;
+            }
+            if (temp.getNext().getNo() > heroNode.getNo()) {//位置找到,在temp的后面插入
+                break;
+            } else if (temp.getNext().getNo() == heroNode.getNo()){//说明希望添加的编号已经存在
+                flag = true;
+                break;
+            }
+            temp = temp.getNext(); //没找到 ,后移再找
+        }
+        if (flag) { //处理编号存在的情况
+            System.out.println("当前编号已经存在:"+heroNode.getNo());
+        }else {//处理找到了的情况. 找到了就要建立新的关系了
+            heroNode.setNext(temp.getNext());
+            temp.setNext(heroNode);
+        }
+    }
+
+    /**
+     * 添加 方法 我自己写的,我分成几部分来处理,我的方法明显花的篇幅要大一些,我自以为的效率提升有没有呢?我暂时也未可知
+     * 2022年1月27日17:04:50
+     * 按 no 顺序添加,从小到大 1 2 3 4 5
+     * @param heroNode 要添加的 HeroNode
+     */
+    public void addByOrder_WriteByMySelf(HeroNode heroNode) {
         //循环遍历这个Node
         //在遍历之前,先判断是不是在第一个插入, 或者在最后一个插入,如果是的,则插入时省去遍历的时间,效率更高
+        //第一个
+        if (head.getNext() == null) {
+            head.setNext(heroNode);
+            return;
+        }
+        //判断有没有相同no的,如果有,不能添加
+        if (checkSameNo(heroNode)){  //缺点:每次添加都从头至尾遍历一次
+            return;
+        }
+        //最后一个
+        if (getLastHeroNode().getNo() < heroNode.getNo()) {
+            this.getLastHeroNode().setNext(heroNode);
+            return;
+        }
+        HeroNode temp = head.getNext();
+        //头节点和第一个节点之间
+        if (heroNode.getNo() < this.getFirstHeroNode().getNo()) {
+            head.setNext(heroNode);
+            heroNode.setNext(temp);
+            return;
+        }
+        //在中间插入
+        while (true) {
+            //第一个节点 - 最后一个节点之间
+            if (heroNode.getNo() < temp.getNext().getNo()) {
+                heroNode.setNext(temp.getNext()); //注意: 链表要把新加入的那个先接后面一个,再把前面那个的后一个指向新加入的那个
+                temp.setNext(heroNode); //这两行搞反了会出现引用死循环
+                break;
+            }
+            temp = temp.getNext();
+        }
+    }
 
-//        while (true) {
-//            break;
-//        }
-
+    /**
+     * 判断新添加的参数的no在链表中是否已经存在
+     * @param heroNode 将要被审查的 HeroNode
+     * @return 存在返回 true , or false
+     */
+    private boolean checkSameNo(HeroNode heroNode){
+        //遍历整个链表,对no进行比对
+        HeroNode temp = getFirstHeroNode();
+        while (true) {
+            if (temp.getNext() == null) { //遍历到最后一个也没有相等的
+                return false; //返回false
+            }
+            if (temp.getNo() == heroNode.getNo()) {
+                System.out.println("该链表已经存在编号为:" + heroNode.getNo() + "的HeroNode");
+                return true;
+            }
+            temp = temp.getNext();
+        }
     }
 
     /**
@@ -70,7 +177,11 @@ class SingleLinkedList {
      * @return 第一个节点
      */
     public HeroNode getFirstHeroNode(){
-        return head.getNext();
+        HeroNode temp = head.getNext();
+        if (temp == null) { //得避免空指针异常
+            throw new NoSuchElementException("链表中还没有节点");
+        }
+        return temp;
     }
 
     /**
