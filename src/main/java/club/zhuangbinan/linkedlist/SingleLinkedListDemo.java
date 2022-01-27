@@ -13,8 +13,8 @@ public class SingleLinkedListDemo {
         HeroNode heroNode1= new HeroNode(1,"宋江","及时雨");
         HeroNode heroNode2= new HeroNode(2,"卢俊义","玉麒麟");
         HeroNode heroNode3= new HeroNode(3,"林冲","豹子头");
-        linkedList.addWithoutOrder(heroNode1);
         linkedList.addWithoutOrder(heroNode2);
+        linkedList.addWithoutOrder(heroNode1);
         linkedList.addWithoutOrder(heroNode3);
 
         linkedList.list();
