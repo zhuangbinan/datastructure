@@ -61,6 +61,7 @@ public class SingleLinkedListDemo {
         linkedListWithOrderByTeacher.update(new HeroNode(11,"小姐姐","和黄狗"));
 
         linkedListWithOrderByTeacher.list();
+        System.out.println("当前单向链表长度:"+linkedListWithOrderByTeacher.getLength(linkedListWithOrderByTeacher.getHead()));
         System.out.println();
         linkedListWithOrderByTeacher.deleteByNo(15);
         linkedListWithOrderByTeacher.deleteByNo(11);
@@ -68,6 +69,19 @@ public class SingleLinkedListDemo {
         linkedListWithOrderByTeacher.deleteByNo(13);
         linkedListWithOrderByTeacher.deleteByNo(14);
         linkedListWithOrderByTeacher.list();
+        System.out.println("当前单向链表长度:"+linkedListWithOrderByTeacher.getLength(linkedListWithOrderByTeacher.getHead()));
+
+
+        linkedListWithOrderByTeacher.addByOrder_WriteByTeacher(heroNode11);
+        linkedListWithOrderByTeacher.addByOrder_WriteByTeacher(heroNode12);
+        linkedListWithOrderByTeacher.addByOrder_WriteByTeacher(heroNode13);
+        linkedListWithOrderByTeacher.addByOrder_WriteByTeacher(heroNode14);
+
+        linkedListWithOrderByTeacher.list();
+        int descIndex = 2;
+        HeroNode anyOneElementDescByIndex = linkedListWithOrderByTeacher.getAnyOneElementDescByIndex(linkedListWithOrderByTeacher.getHead(), descIndex);
+        System.out.println("当前渠道的倒数第"+descIndex+"个元素为:"+anyOneElementDescByIndex);
+
 
     }
 }
@@ -295,6 +309,51 @@ class SingleLinkedList {
             System.out.println(temp);
             temp = temp.getNext();
         }
+    }
+
+
+    /**
+     * 获取倒数第 K 个节点
+     * @param head 需要处理的单项链表头
+     * @param index 第 K 个
+     * @return HeroNode
+     */
+    public HeroNode getAnyOneElementDescByIndex(HeroNode head,int index) {
+        HeroNode temp = head.getNext();
+        if (temp == null) {
+            return null;
+        }
+        int length = getLength(head);
+        if (index <= 0 || index > length) {
+            throw new IllegalArgumentException("参数不正确index="+index);
+        }
+        for (int i = 0; i < length - index; i++) {
+            temp = temp.getNext();
+        }
+        return temp;
+    }
+
+
+    public HeroNode getHead(){
+        return this.head;
+    }
+
+    /**
+     *
+     * @param head 单项链表头
+     * @return 单项链表有效元素个数
+     */
+    public int getLength(HeroNode head) {
+        if (head.getNext() == null) {
+            return 0;
+        }
+        int length = 0;
+        HeroNode temp = head.getNext();
+        while (temp != null) {
+            length ++ ;
+            temp = temp.getNext();
+        }
+        return length;
     }
 
 }
