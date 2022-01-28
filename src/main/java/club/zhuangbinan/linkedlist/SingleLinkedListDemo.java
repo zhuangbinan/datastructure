@@ -56,6 +56,19 @@ public class SingleLinkedListDemo {
         linkedListWithOrderByTeacher.addByOrder_WriteByTeacher(heroNode11);
         linkedListWithOrderByTeacher.list();
 
+        HeroNode willUpdateNode= new HeroNode(15,"小改改","孙尚香");
+        linkedListWithOrderByTeacher.addByOrder_WriteByMySelf(willUpdateNode);
+        linkedListWithOrderByTeacher.update(new HeroNode(11,"小姐姐","和黄狗"));
+
+        linkedListWithOrderByTeacher.list();
+        System.out.println();
+        linkedListWithOrderByTeacher.deleteByNo(15);
+        linkedListWithOrderByTeacher.deleteByNo(11);
+        linkedListWithOrderByTeacher.deleteByNo(12);
+        linkedListWithOrderByTeacher.deleteByNo(13);
+        linkedListWithOrderByTeacher.deleteByNo(14);
+        linkedListWithOrderByTeacher.list();
+
     }
 }
 
@@ -149,6 +162,74 @@ class SingleLinkedList {
                 break;
             }
             temp = temp.getNext();
+        }
+    }
+
+    /**
+     * 按照 no 删除一个节点
+     * @param no 删除参数
+     * @return 删除节点个数
+     */
+    public int deleteByNo(int no) {
+        HeroNode temp = head;
+        if (temp.getNext() == null) {
+            System.out.println("链表为空");
+            return 0;
+        }
+        boolean flag = false;
+        while (true) {
+            if (temp.getNext() == null) {
+                break;//到最后
+            }
+            if (temp.getNext().getNo() == no) {
+                flag = true;
+                break;
+            }
+            temp = temp.getNext();
+        }
+        if (flag) {
+            //找到了位置,删除
+            HeroNode willDel = temp.getNext();//是要删除掉的
+            HeroNode willConnect = willDel.getNext();
+            temp.setNext(willConnect);
+            willDel.setNext(null);
+            return 1;
+        }else{
+            System.out.println("没有找到要删除的节点:"+no);
+            return 0;
+        }
+    }
+
+    /**
+     * 根据HeroNode的no来修改链表中的HeroNode
+     * @param heroNode 修改参数
+     */
+    public int update(HeroNode heroNode) {
+        HeroNode temp = head;
+        if (head.getNext() == null) {
+            System.out.println("链表为空");
+            return 0;
+        }
+        boolean flag = false;
+        while (true) {
+
+            if (temp.getNext() == null) {
+                break;
+            }
+            if (temp.getNext().getNo() == heroNode.getNo()) {
+                flag = true;
+                break;
+            }
+            temp = temp.getNext();
+        }
+
+        if (flag) {
+            temp.getNext().setName(heroNode.getName());
+            temp.getNext().setNickname(heroNode.getNickname());
+            return 1;
+        }else {
+            System.out.println("没有找到需要修改节点:"+heroNode.getNo());
+            return 0;
         }
     }
 
