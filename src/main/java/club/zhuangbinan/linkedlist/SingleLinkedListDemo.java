@@ -94,8 +94,15 @@ public class SingleLinkedListDemo {
         linkedListTx.addByOrder_WriteByTeacher(reverse103);
         linkedListTx.addByOrder_WriteByTeacher(reverse104);
         linkedListTx.list();
-        linkedListTx.reverseByMySelf();
+        System.out.println("我自己的写法");
+//        linkedListTx.reverseByMySelfChoiceMethodNum(1);
+//        linkedListTx.reverseByMySelfChoiceMethodNum(2);
+        linkedListTx.reverseByMySelfChoiceMethodNum(3);
         System.out.println();
+        linkedListTx.list();
+        //P22 老师的思路写法
+        linkedListTx.reverseByTeacher();
+        System.out.println("老师的思路写法转换后");
         linkedListTx.list();
 
     }
@@ -329,8 +336,9 @@ class SingleLinkedList {
     /**
      * p22 腾讯面试题 给单项链表反转
      * 我自己写的
+     * @param methodNum 选一种实现方式,1,2,3
      */
-    public void reverseByMySelf() {
+    public void reverseByMySelfChoiceMethodNum(int methodNum) {
         HeroNode temp = head.getNext();
         if (temp == null || temp.getNext() == null) {
 //            throw new IllegalArgumentException("这个单链表没有元素");//没必要抛出异常
@@ -342,27 +350,83 @@ class SingleLinkedList {
         //1.创建一个新的HeroNode reverseHead
         //2.遍历参数的节点,从末尾开始拿节点,把拿到的节点放到reverseHead,删除原来的参数的节点
         //3.遍历结束后,把参数的head.next = reverseHead.next
-        HeroNode reverseHead = new HeroNode(0,"","");
+        SingleLinkedList reverseList = new SingleLinkedList();
+        HeroNode reverseHead = reverseList.getHead();
         int length = getLength(getHead());
-        for (int i = 0; i < length; i++) {
-            HeroNode lastHeroNode = getLastHeroNode();
-            if (lastHeroNode != null) {
-                reverseHead.setNext(lastHeroNode);
-                this.deleteByNo(lastHeroNode.getNo());
-                reverseHead = reverseHead.getNext();
-            }else{
+
+        switch (methodNum) {
+            case 1:
+                for (int i = 0; i < length; i++) {
+                    HeroNode lastHeroNode = getLastHeroNode();
+                    if (lastHeroNode != null) {
+                        reverseHead.setNext(lastHeroNode);
+                        this.deleteByNo(lastHeroNode.getNo());
+                        reverseHead = reverseHead.getNext(); //指针移到下一层;隔了1天我自己写的代码都看不懂了...
+                    }else{
+                        break;
+                    }
+                }
+                head.setNext(reverseList.getHead().getNext());
+                reverseList = null;
                 break;
-            }
+            case 2:
+                for (int i = 0; i < length; i++) {
+                    HeroNode lastHeroNode = getLastHeroNode();
+                    if (lastHeroNode != null) {
+                        reverseList.addWithoutOrder(lastHeroNode); //case 1 就是为了完成这个效果;
+                        this.deleteByNo(lastHeroNode.getNo());
+                    }else{
+                        break;
+                    }
+                }
+                head.setNext(reverseList.getHead().getNext());
+                break;
+            case 3:
+                //不创建SingleLinkedList对象来做
+                HeroNode newHead = new HeroNode(0,"",""); //创建头节点
+                //新的链表的指针,和case 1 差不多
+                HeroNode cur = newHead;
+                while (head.getNext() != null) {
+                    HeroNode lastHeroNode = getLastHeroNode();
+                    cur.setNext(lastHeroNode);
+                    cur = cur.getNext();
+                    deleteByNo(lastHeroNode.getNo());
+                }
+                head.setNext(newHead.getNext());
+                break;
         }
-        head.setNext(reverseHead.getNext());
+
     }
 
     /**
      * p22 腾讯面试题 给单项链表反转
-     * 老师的思路
+     * 老师的思路 和我思路有差别
+     * 老师的是从第一个节点开始取,我是从最后一个节点取
+     * 从第一个节点取, 那么在新的链表插入时,也总是要从头结点处插入
+     * 可以叫头插法吗 ? 2022年1月29日15:47:04
      */
     public void reverseByTeacher() {
+        HeroNode temp = head.getNext();
+        if (temp == null || temp.getNext() == null) {
+            return;
+        }
+        HeroNode cur = temp;  //定义一个辅助指针 ,帮助我们遍历原来的链表
+        HeroNode next = null; //指向当前[cur]节点的下一个节点
+        HeroNode reverseHead = new HeroNode(0,"","");
 
+        //遍历到最后一个节点,遍历原来的链表
+        //每遍历一个节点,就将其取出,并放在新的链表reverseHead的最前端
+        while (cur != null) {
+            //1.从源链表取第一个节点,保存起来,cur = temp就是保存起来了
+            next = cur.getNext(); // 把第第一个节点的下一个节点保存起来
+            //2.把源链表拿出来那个节点放到新链表的第一个
+            cur.setNext(reverseHead.getNext());
+            //3.把新链表的头节点和新拿过来的节点连接
+            reverseHead.setNext(cur);
+            //4.cur后移
+            cur = next;
+        }
+        head.setNext(reverseHead.getNext());//把转换好额链表设置回原链表
     }
 
 
