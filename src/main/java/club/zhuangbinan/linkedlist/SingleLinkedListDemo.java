@@ -328,19 +328,21 @@ class SingleLinkedList {
 
     /**
      * p22 腾讯面试题 给单项链表反转
-     *
+     * 我自己写的
      */
     public void reverseByMySelf() {
         HeroNode temp = head.getNext();
-        if (temp == null) {
-            throw new IllegalArgumentException("这个单链表没有元素");
+        if (temp == null || temp.getNext() == null) {
+//            throw new IllegalArgumentException("这个单链表没有元素");//没必要抛出异常
+            //直接返回就好
+            // 加上 || temp.getNext()==null 对只有一个节点的情况进行判断,提高效率;看了老师写的后改的
+            return;
         }
         //思路:
         //1.创建一个新的HeroNode reverseHead
         //2.遍历参数的节点,从末尾开始拿节点,把拿到的节点放到reverseHead,删除原来的参数的节点
         //3.遍历结束后,把参数的head.next = reverseHead.next
-        SingleLinkedList reverseList = new SingleLinkedList();
-        HeroNode reverseHead = reverseList.getHead();
+        HeroNode reverseHead = new HeroNode(0,"","");
         int length = getLength(getHead());
         for (int i = 0; i < length; i++) {
             HeroNode lastHeroNode = getLastHeroNode();
@@ -352,9 +354,17 @@ class SingleLinkedList {
                 break;
             }
         }
-        head.setNext(reverseList.getHead().getNext());
-        reverseList = null;
+        head.setNext(reverseHead.getNext());
     }
+
+    /**
+     * p22 腾讯面试题 给单项链表反转
+     * 老师的思路
+     */
+    public void reverseByTeacher() {
+
+    }
+
 
     /**
      * 获取倒数第 K 个节点
