@@ -82,6 +82,21 @@ public class SingleLinkedListDemo {
         HeroNode anyOneElementDescByIndex = linkedListWithOrderByTeacher.getAnyOneElementDescByIndex(linkedListWithOrderByTeacher.getHead(), descIndex);
         System.out.println("当前渠道的倒数第"+descIndex+"个元素为:"+anyOneElementDescByIndex);
 
+        //p22 腾讯面试题,要把一个单项链表反转
+        SingleLinkedList linkedListTx = new SingleLinkedList();
+        HeroNode reverse101 = new HeroNode(101,"101","101");
+        HeroNode reverse102 = new HeroNode(102,"102","102");
+        HeroNode reverse103 = new HeroNode(103,"103","103");
+        HeroNode reverse104 = new HeroNode(104,"104","104");
+
+        linkedListTx.addByOrder_WriteByTeacher(reverse101);
+        linkedListTx.addByOrder_WriteByTeacher(reverse102);
+        linkedListTx.addByOrder_WriteByTeacher(reverse103);
+        linkedListTx.addByOrder_WriteByTeacher(reverse104);
+        linkedListTx.list();
+        linkedListTx.reverseByMySelf();
+        System.out.println();
+        linkedListTx.list();
 
     }
 }
@@ -286,7 +301,7 @@ class SingleLinkedList {
     public HeroNode getLastHeroNode() {
         HeroNode temp = head.getNext();
         if (temp == null) { //得避免空指针异常
-            throw new NoSuchElementException("链表中还没有节点");
+            return null;
         }
         while (true) {
             if (temp.getNext() == null) {
@@ -311,6 +326,35 @@ class SingleLinkedList {
         }
     }
 
+    /**
+     * p22 腾讯面试题 给单项链表反转
+     *
+     */
+    public void reverseByMySelf() {
+        HeroNode temp = head.getNext();
+        if (temp == null) {
+            throw new IllegalArgumentException("这个单链表没有元素");
+        }
+        //思路:
+        //1.创建一个新的HeroNode reverseHead
+        //2.遍历参数的节点,从末尾开始拿节点,把拿到的节点放到reverseHead,删除原来的参数的节点
+        //3.遍历结束后,把参数的head.next = reverseHead.next
+        SingleLinkedList reverseList = new SingleLinkedList();
+        HeroNode reverseHead = reverseList.getHead();
+        int length = getLength(getHead());
+        for (int i = 0; i < length; i++) {
+            HeroNode lastHeroNode = getLastHeroNode();
+            if (lastHeroNode != null) {
+                reverseHead.setNext(lastHeroNode);
+                this.deleteByNo(lastHeroNode.getNo());
+                reverseHead = reverseHead.getNext();
+            }else{
+                break;
+            }
+        }
+        head.setNext(reverseList.getHead().getNext());
+        reverseList = null;
+    }
 
     /**
      * 获取倒数第 K 个节点
