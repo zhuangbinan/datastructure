@@ -55,8 +55,8 @@ class DoubleLinkedList {
         }
     }
 
-    public void setHead(HeroNode2 head) {
-        this.head = head;
+    public HeroNode2 getHead() {
+        return this.head;
     }
 
 }
