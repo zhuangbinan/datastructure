@@ -32,6 +32,21 @@ public class DoubleLinkedListDemo {
         HeroNode2 heroNode2 = new HeroNode2(5,"update 555555","nickName 55555");
         doubleLinkedList.updateByNo(heroNode2);
         doubleLinkedList.list();
+
+        System.out.println("=========================");
+
+        HeroNode2 o1 = new HeroNode2(1, "zhangsan", "法外狂徒");
+        HeroNode2 o2 = new HeroNode2(2, "lisi", "邻居女孩");
+        HeroNode2 o3 = new HeroNode2(3, "ww", "www-1");
+        HeroNode2 o6 = new HeroNode2(6, "66", "www-666");
+        HeroNode2 o7 = new HeroNode2(7, "66", "www-777");
+        DoubleLinkedList doubleLinkedListByNoOrder = new DoubleLinkedList();
+        doubleLinkedListByNoOrder.addByNoOrder(o6);
+        doubleLinkedListByNoOrder.addByNoOrder(o2);
+        doubleLinkedListByNoOrder.addByNoOrder(o3);
+        doubleLinkedListByNoOrder.addByNoOrder(o1);
+        doubleLinkedListByNoOrder.addByNoOrder(o7);
+        doubleLinkedListByNoOrder.list();
     }
 }
 
@@ -55,6 +70,49 @@ class DoubleLinkedList {
         }
     }
 
+    /**
+     * 课后作业完成 按照编号顺序添加 从小到大
+     * @param heroNode2 HeroNode2
+     */
+    public void addByNoOrder(HeroNode2 heroNode2) {
+        HeroNode2 temp = head.getNext();
+        if (temp == null) {
+            head.setNext(heroNode2);
+            heroNode2.setPre(head);
+            return;
+        }
+        while (temp != null) {
+            if (temp.getNo() <= heroNode2.getNo()) {
+                if (temp.getNext() == null) {
+                    temp.setNext(heroNode2);
+                    heroNode2.setPre(temp);
+                    break;
+                }else {
+                    if (temp.getNext().getNo() > heroNode2.getNo()) {
+                        heroNode2.setNext(temp.getNext());
+                        heroNode2.setPre(temp);
+                        temp.setNext(heroNode2);
+                        break;
+                    }
+                    if (temp.getNext() != null) {
+                        temp = temp.getNext();
+                    }
+                }
+            }else {
+                //如果是小于的,那放前面
+                temp.getPre().setNext(heroNode2);
+                heroNode2.setNext(temp);
+                heroNode2.setPre(temp.getPre());
+                temp.setPre(heroNode2);
+                break;
+            }
+        }
+    }
+
+    /**
+     * 默认添加到链表的末尾
+     * @param heroNode2 需要添加的元素
+     */
     public void add(HeroNode2 heroNode2) {
         HeroNode2 temp = head.getNext();
         if (temp == null) {
