@@ -7,13 +7,28 @@ package club.zhuangbinan.linkedlist;
 public class DoubleLinkedListDemo {
     public static void main(String[] args) {
         DoubleLinkedList doubleLinkedList = new DoubleLinkedList();
-
+        doubleLinkedList.list();
         HeroNode2 h1 = new HeroNode2(1,"zhangsan","法外狂徒");
         HeroNode2 h2 = new HeroNode2(2,"lisi","邻居女孩");
         HeroNode2 h3 = new HeroNode2(3,"ww","www-1");
+        HeroNode2 h4 = new HeroNode2(4,"44","www-44");
+        HeroNode2 h5 = new HeroNode2(5,"55","www-55");
         doubleLinkedList.add(h1);
         doubleLinkedList.add(h2);
         doubleLinkedList.add(h3);
+//        doubleLinkedList.list();
+//        doubleLinkedList.del(3);
+//        doubleLinkedList.list();
+//        doubleLinkedList.del(4);
+//        doubleLinkedList.list();
+//        doubleLinkedList.add(h3);
+//        doubleLinkedList.del(2);
+        doubleLinkedList.add(h4);
+        doubleLinkedList.add(h5);
+        doubleLinkedList.list();
+
+        doubleLinkedList.deleteByNos(2,3);
+
         doubleLinkedList.list();
     }
 }
@@ -53,6 +68,38 @@ class DoubleLinkedList {
                 break;
             }
         }
+    }
+
+    public void deleteByNos(Integer ...nos){
+        for (int i = 0; i < nos.length; i++) {
+            del(nos[i]);
+        }
+    }
+
+    public void del(Integer no){
+        HeroNode2 temp = head;
+        if (temp.getNext() == null) {
+            System.out.println("链表为空");
+            return;
+        }
+        while (true) {
+
+            HeroNode2 thisOne = temp.getNext();
+            if (thisOne != null && thisOne.getNo() == no) {
+                temp.setNext(thisOne.getNext());
+                if (thisOne.getNext() != null) {
+                    thisOne.getNext().setPre(temp);
+                }
+                break;
+            }
+            if (temp.getNext() != null) {
+                temp = temp.getNext();
+            }else {
+                System.out.println("没找到你要删除的");
+                break;
+            }
+        }
+
     }
 
     public HeroNode2 getHead() {
