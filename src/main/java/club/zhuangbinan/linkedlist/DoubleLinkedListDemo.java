@@ -7,7 +7,7 @@ package club.zhuangbinan.linkedlist;
 public class DoubleLinkedListDemo {
     public static void main(String[] args) {
         DoubleLinkedList doubleLinkedList = new DoubleLinkedList();
-        doubleLinkedList.list();
+
         HeroNode2 h1 = new HeroNode2(1,"zhangsan","法外狂徒");
         HeroNode2 h2 = new HeroNode2(2,"lisi","邻居女孩");
         HeroNode2 h3 = new HeroNode2(3,"ww","www-1");
@@ -19,14 +19,14 @@ public class DoubleLinkedListDemo {
 }
 
 /**
- * 双向链表
+ * 双向链表 impl by myself
  */
 class DoubleLinkedList {
 
     private HeroNode2 head = new HeroNode2(-1,"","");
 
     public void list() {
-        if (head == null) {
+        if (head.getNext() == null) {
             System.out.println("链表为空");
             return;
         }
@@ -42,19 +42,17 @@ class DoubleLinkedList {
         HeroNode2 temp = head.getNext();
         if (temp == null) {
             head.setNext(heroNode2);
+            heroNode2.setPre(head);
         }
         while (temp != null) {
             if (temp.getNext() != null) {
                 temp = temp.getNext();
             }else {
                 temp.setNext(heroNode2);
+                heroNode2.setPre(temp);
                 break;
             }
         }
-    }
-
-    public HeroNode2 getHead() {
-        return head;
     }
 
     public void setHead(HeroNode2 head) {
@@ -123,8 +121,6 @@ class HeroNode2 {
                 "no=" + no +
                 ", name='" + name + '\'' +
                 ", nickname='" + nickname + '\'' +
-                ", next=" + next +
-                ", pre=" + pre +
                 '}';
     }
 }
