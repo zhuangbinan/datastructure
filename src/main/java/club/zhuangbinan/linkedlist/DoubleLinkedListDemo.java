@@ -2,17 +2,16 @@ package club.zhuangbinan.linkedlist;
 
 /**
  * 双向链表Demo
- *
  */
 public class DoubleLinkedListDemo {
     public static void main(String[] args) {
         DoubleLinkedList doubleLinkedList = new DoubleLinkedList();
         doubleLinkedList.list();
-        HeroNode2 h1 = new HeroNode2(1,"zhangsan","法外狂徒");
-        HeroNode2 h2 = new HeroNode2(2,"lisi","邻居女孩");
-        HeroNode2 h3 = new HeroNode2(3,"ww","www-1");
-        HeroNode2 h4 = new HeroNode2(4,"44","www-44");
-        HeroNode2 h5 = new HeroNode2(5,"55","www-55");
+        HeroNode2 h1 = new HeroNode2(1, "zhangsan", "法外狂徒");
+        HeroNode2 h2 = new HeroNode2(2, "lisi", "邻居女孩");
+        HeroNode2 h3 = new HeroNode2(3, "ww", "www-1");
+        HeroNode2 h4 = new HeroNode2(4, "44", "www-44");
+        HeroNode2 h5 = new HeroNode2(5, "55", "www-55");
         doubleLinkedList.add(h1);
         doubleLinkedList.add(h2);
         doubleLinkedList.add(h3);
@@ -27,8 +26,11 @@ public class DoubleLinkedListDemo {
         doubleLinkedList.add(h5);
         doubleLinkedList.list();
 
-        doubleLinkedList.deleteByNos(2,3);
+        doubleLinkedList.deleteByNos(2, 3);
 
+        doubleLinkedList.list();
+        HeroNode2 heroNode2 = new HeroNode2(5,"update 555555","nickName 55555");
+        doubleLinkedList.updateByNo(heroNode2);
         doubleLinkedList.list();
     }
 }
@@ -38,7 +40,7 @@ public class DoubleLinkedListDemo {
  */
 class DoubleLinkedList {
 
-    private HeroNode2 head = new HeroNode2(-1,"","");
+    private HeroNode2 head = new HeroNode2(-1, "", "");
 
     public void list() {
         if (head.getNext() == null) {
@@ -62,7 +64,7 @@ class DoubleLinkedList {
         while (temp != null) {
             if (temp.getNext() != null) {
                 temp = temp.getNext();
-            }else {
+            } else {
                 temp.setNext(heroNode2);
                 heroNode2.setPre(temp);
                 break;
@@ -70,13 +72,13 @@ class DoubleLinkedList {
         }
     }
 
-    public void deleteByNos(Integer ...nos){
+    public void deleteByNos(Integer... nos) {
         for (int i = 0; i < nos.length; i++) {
             del(nos[i]);
         }
     }
 
-    public void del(Integer no){
+    public void del(Integer no) {
         HeroNode2 temp = head;
         if (temp.getNext() == null) {
             System.out.println("链表为空");
@@ -94,8 +96,30 @@ class DoubleLinkedList {
             }
             if (temp.getNext() != null) {
                 temp = temp.getNext();
-            }else {
+            } else {
                 System.out.println("没找到你要删除的");
+                break;
+            }
+        }
+
+    }
+
+    public void updateByNo(HeroNode2 no) {
+        HeroNode2 temp = head;
+        if (temp.getNext() == null) {
+            System.out.println("链表为空");
+            return;
+        }
+        while (true) {
+            if (temp.getNo()==no.getNo()) {
+                temp.setName(no.getName());
+                temp.setNickname(no.getNickname());
+                break;
+            }
+            if (temp.getNext() != null) {
+                temp = temp.getNext();
+            }else {
+                System.out.println("没有找到符合条件的No");
                 break;
             }
         }
@@ -114,7 +138,7 @@ class HeroNode2 {
     private String name;
     private String nickname;
     private HeroNode2 next;
-    private HeroNode2 pre ;
+    private HeroNode2 pre;
 
     public HeroNode2(int no, String name, String nickname) {
         this.no = no;
