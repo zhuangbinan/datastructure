@@ -19,10 +19,21 @@ public class BubbleSorting {
         betterBubbleSortPlus(arr3,true);
 
         //适合betterBubbleSortPlus的array
-        int[] arr5 = {1,2,3,4,5};
-        normalBubbleSort(arr5,false);
-        betterBubbleSort(arr5,false);
-        betterBubbleSortPlus(arr5,false);
+        int[] arr51 = {1, 2, 3, 4, 5};
+        int[] arr52 = {1, 2, 3, 4, 5};
+        int[] arr53 = {1, 2, 3, 4, 5};
+        normalBubbleSort(arr51,false);
+        betterBubbleSort(arr52,false);
+        betterBubbleSortPlus(arr53,false);
+
+        //适合betterBubbleSortPlus的array2
+        int[] arr6 = {1, 3, 2, 5, 4};
+        int[] arr7 = {1, 3, 2, 5, 4};
+        int[] arr8 = {1, 3, 2, 5, 4};
+
+        normalBubbleSort(arr6,true);
+        betterBubbleSort(arr7,true);
+        betterBubbleSortPlus(arr8,true);
 
     }
 
@@ -109,6 +120,8 @@ public class BubbleSorting {
                 System.out.printf("betterBubbleSortPlus排序结果:%s\n",Arrays.toString(arr));
                 System.out.printf("betterBubbleSortPlus排序次数:%s\n",sortCount);
                 return;
+            }else {
+                plusCount = 0; //修正判断条件
             }
         }
         System.out.printf("betterBubbleSortPlus排序结果:%s\n",Arrays.toString(arr));
