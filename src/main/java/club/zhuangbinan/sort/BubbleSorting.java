@@ -18,6 +18,7 @@ public class BubbleSorting {
         betterBubbleSort(arr2,true);
         betterBubbleSortPlus(arr3,true);
 
+        System.out.println("=================================================================");
         //适合betterBubbleSortPlus的array
         int[] arr51 = {1, 2, 3, 4, 5};
         int[] arr52 = {1, 2, 3, 4, 5};
@@ -25,7 +26,7 @@ public class BubbleSorting {
         normalBubbleSort(arr51,false);
         betterBubbleSort(arr52,false);
         betterBubbleSortPlus(arr53,false);
-
+        System.out.println("=================================================================");
         //适合betterBubbleSortPlus的array2
         int[] arr6 = {1, 3, 2, 5, 4};
         int[] arr7 = {1, 3, 2, 5, 4};
@@ -34,6 +35,38 @@ public class BubbleSorting {
         normalBubbleSort(arr6,true);
         betterBubbleSort(arr7,true);
         betterBubbleSortPlus(arr8,true);
+        System.out.println("=================================================================");
+
+        //测试冒泡排序的速度O(n^2)
+        int[] arr8W = new int[80000];
+        for (int i = 0; i < 80000; i++) {
+            arr8W[i] = (int)(Math.random() * 800000);
+        }
+
+        int[] arr8W_1 = new int[80000];
+        int[] arr8W_2 = new int[80000];
+        for (int i = 0; i < arr8W.length; i++) {
+            arr8W_1[i] = arr8W[i];
+            arr8W_2[i] = arr8W[i];
+        }
+
+        long startMill = System.currentTimeMillis();
+        normalBubbleSort(arr8W,false);
+        long endMill = System.currentTimeMillis();
+
+        long startMill1 = System.currentTimeMillis();
+        betterBubbleSort(arr8W_1,false);
+        long endMill1 = System.currentTimeMillis();
+
+        long startMill2 = System.currentTimeMillis();
+        betterBubbleSortPlus(arr8W_2,false);
+        long endMill2 = System.currentTimeMillis();
+
+        System.out.printf("normalBubbleSort cost time %s ms\n",endMill-startMill); //normalBubbleSort cost time 8880 ms ; normalBubbleSort排序次数:6399840001
+        System.out.printf("betterBubbleSort cost time %s ms\n",endMill1-startMill1); //betterBubbleSort cost time 7032 ms; betterBubbleSort排序次数:3199960000
+        System.out.printf("betterBubbleSortPlus cost time %s ms\n",endMill2-startMill2); //betterBubbleSortPlus cost time 7673 ms ; betterBubbleSortPlus排序次数:3199953445
+        System.out.println("=================================================================");
+
 
     }
 
@@ -44,7 +77,7 @@ public class BubbleSorting {
      */
     public static void normalBubbleSort(int[] arr, boolean isShowProgress) {
         int temp = Integer.MIN_VALUE;
-        int sortCount = 0;
+        long sortCount = 0;
         //内层for循环是一次冒泡排序的
         //还要在外层加一层for循环驱动内层排序直到排序完成
         for (int j = 0; j < arr.length - 1; j++) {
@@ -71,7 +104,7 @@ public class BubbleSorting {
      */
     public static void betterBubbleSort(int[] arr, boolean isShowProgress) {
         int temp = Integer.MIN_VALUE;
-        int sortCount = 0;
+        long sortCount = 0;
         //内层for循环是一次冒泡排序的
         //还要在外层加一层for循环驱动内层排序直到排序完成
         for (int j = 0; j < arr.length - 1; j++) {
@@ -99,8 +132,9 @@ public class BubbleSorting {
      */
     public static void betterBubbleSortPlus(int[] arr, boolean isShowProgress) {
         int temp = Integer.MIN_VALUE;
-        int sortCount = 0;
-        int plusCount = 0;
+        long sortCount = 0;
+//        int plusCount = 0;
+        boolean flag = false;
         //内层for循环是一次冒泡排序的
         //还要在外层加一层for循环驱动内层排序直到排序完成
         for (int j = 0; j < arr.length - 1; j++) {
@@ -109,20 +143,28 @@ public class BubbleSorting {
                     temp = arr[i + 1];
                     arr[i + 1] = arr[i];
                     arr[i] = temp;
-                    plusCount ++; //交换次数
+//                    plusCount ++; //交换次数
+                    flag = true;
                 }
                 sortCount++; //判断元素的次数,内层for的次数
             }
             if (isShowProgress) {
                 System.out.println(Arrays.toString(arr));
             }
-            if (plusCount == 0) {
-                System.out.printf("betterBubbleSortPlus排序结果:%s\n",Arrays.toString(arr));
-                System.out.printf("betterBubbleSortPlus排序次数:%s\n",sortCount);
+            if (!flag) {
+                System.out.printf("betterBubbleSortPlus排序结果:%s\n", Arrays.toString(arr));
+                System.out.printf("betterBubbleSortPlus排序次数:%s\n", sortCount);
                 return;
-            }else {
-                plusCount = 0; //修正判断条件
+            }else{
+                flag = false;
             }
+//            if (plusCount == 0) {
+//                System.out.printf("betterBubbleSortPlus排序结果:%s\n",Arrays.toString(arr));
+//                System.out.printf("betterBubbleSortPlus排序次数:%s\n",sortCount);
+//                return;
+//            }else {
+//                plusCount = 0; //修正判断条件
+//            }
         }
         System.out.printf("betterBubbleSortPlus排序结果:%s\n",Arrays.toString(arr));
         System.out.printf("betterBubbleSortPlus排序次数:%s\n",sortCount);
