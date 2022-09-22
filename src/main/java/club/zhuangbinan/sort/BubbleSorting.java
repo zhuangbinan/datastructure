@@ -45,9 +45,11 @@ public class BubbleSorting {
 
         int[] arr8W_1 = new int[80000];
         int[] arr8W_2 = new int[80000];
+        int[] arraysApi = new int[80000];
         for (int i = 0; i < arr8W.length; i++) {
             arr8W_1[i] = arr8W[i];
             arr8W_2[i] = arr8W[i];
+            arraysApi[i] = arr8W[i];
         }
 
         long startMill = System.currentTimeMillis();
@@ -62,12 +64,23 @@ public class BubbleSorting {
         betterBubbleSortPlus(arr8W_2,false);
         long endMill2 = System.currentTimeMillis();
 
+        long startMill3 = System.currentTimeMillis();
+        Arrays.parallelSort(arraysApi);
+        long endMill3 = System.currentTimeMillis();
+
         System.out.printf("normalBubbleSort cost time %s ms\n",endMill-startMill); //normalBubbleSort cost time 8880 ms ; normalBubbleSort排序次数:6399840001
         System.out.printf("betterBubbleSort cost time %s ms\n",endMill1-startMill1); //betterBubbleSort cost time 7032 ms; betterBubbleSort排序次数:3199960000
         System.out.printf("betterBubbleSortPlus cost time %s ms\n",endMill2-startMill2); //betterBubbleSortPlus cost time 7673 ms ; betterBubbleSortPlus排序次数:3199953445
+        System.out.printf("Arrays.parallelSort cost time %s ms\n",endMill3-startMill3); //Arrays.parallelSort cost time 28 ms
         System.out.println("=================================================================");
-
-
+        int[] arrApi2 = new int[800000];
+        for (int i = 0; i < 800000; i++) {
+            arrApi2[i] = (int)(Math.random() * 8000000);
+        }
+        long startMill4 = System.currentTimeMillis();
+        Arrays.parallelSort(arrApi2);
+        long endMill4 = System.currentTimeMillis();
+        System.out.printf("Arrays.parallelSort cost time %s ms\n",endMill4-startMill4);
     }
 
     /**
