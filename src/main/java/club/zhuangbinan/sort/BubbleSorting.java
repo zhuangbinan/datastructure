@@ -80,7 +80,7 @@ public class BubbleSorting {
         long startMill4 = System.currentTimeMillis();
         Arrays.parallelSort(arrApi2);
         long endMill4 = System.currentTimeMillis();
-        System.out.printf("Arrays.parallelSort cost time %s ms\n",endMill4-startMill4);
+        System.out.printf("Arrays.parallelSort cost time %s ms\n",endMill4-startMill4); //Arrays.parallelSort cost time 55 ms
     }
 
     /**
