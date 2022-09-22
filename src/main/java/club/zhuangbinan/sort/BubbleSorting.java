@@ -109,9 +109,9 @@ public class BubbleSorting {
                     temp = arr[i + 1];
                     arr[i + 1] = arr[i];
                     arr[i] = temp;
-                    plusCount ++;
+                    plusCount ++; //交换次数
                 }
-                sortCount++;
+                sortCount++; //判断元素的次数,内层for的次数
             }
             if (isShowProgress) {
                 System.out.println(Arrays.toString(arr));
