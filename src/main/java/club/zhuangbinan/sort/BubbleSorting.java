@@ -52,6 +52,28 @@ public class BubbleSorting {
             arraysApi[i] = arr8W[i];
         }
 
+        /**
+         * 体现betterBubbleSortPlus排序优势的地方
+         */
+//        for (int i = 0; i < 80000; i++) {
+//            if (i == 7749) {
+//                arr8W[i] = i+100;
+//                arr8W_1[i] = i+100;
+//                arr8W_2[i] = i+100;
+//                arraysApi[i] = i+100;
+//            }
+//            if (i == 77490) {
+//                arr8W[i] = i+100;
+//                arr8W_1[i] = i+100;
+//                arr8W_2[i] = i+100;
+//                arraysApi[i] = i+100;
+//            }
+//            arr8W[i] = i;
+//            arr8W_1[i] = i;
+//            arr8W_2[i] = i;
+//            arraysApi[i] = i;
+//        }
+
         long startMill = System.currentTimeMillis();
         normalBubbleSort(arr8W,false);
         long endMill = System.currentTimeMillis();
@@ -65,7 +87,7 @@ public class BubbleSorting {
         long endMill2 = System.currentTimeMillis();
 
         long startMill3 = System.currentTimeMillis();
-        Arrays.parallelSort(arraysApi);
+        Arrays.sort(arraysApi); //sort 和 parallelSort都很快
         long endMill3 = System.currentTimeMillis();
 
         System.out.printf("normalBubbleSort cost time %s ms\n",endMill-startMill); //normalBubbleSort cost time 8880 ms ; normalBubbleSort排序次数:6399840001
