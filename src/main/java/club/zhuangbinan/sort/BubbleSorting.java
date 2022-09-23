@@ -54,6 +54,10 @@ public class BubbleSorting {
 
         /**
          * 体现betterBubbleSortPlus排序优势的地方
+         * normalBubbleSort cost time 1231 ms
+         * betterBubbleSort cost time 647 ms
+         * betterBubbleSortPlus cost time 8 ms
+         * Arrays.parallelSort cost time 2 ms
          */
 //        for (int i = 0; i < 80000; i++) {
 //            if (i == 7749) {
