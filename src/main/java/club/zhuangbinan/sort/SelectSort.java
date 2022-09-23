@@ -107,7 +107,7 @@ public class SelectSort {
 
         //7358
         //8295
-        //1134 选择排序
+        //1134 选择排序 因为交换次数少, 所以比冒泡排序效率高
         //5
         //9159 普通冒泡
         System.out.println(endMill1 - startMill1);
